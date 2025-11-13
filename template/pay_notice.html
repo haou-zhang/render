@@ -1,0 +1,111 @@
+<section class="sheet">
+  <style>
+    .party-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .party-card {
+      padding: 16px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+    .party-card h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #475569;
+    }
+    .money {
+      font-feature-settings: 'tnum';
+      font-variant-numeric: tabular-nums;
+    }
+    .c-name {
+      font-weight: 600;
+    }
+    .totals {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 260px;
+      margin-left: auto;
+    }
+    .totals div {
+      display: flex;
+      justify-content: space-between;
+    }
+    .tr.empty {
+      justify-content: center;
+      text-align: center;
+      color: #94a3b8;
+    }
+  </style>
+  <header class="notice-header">
+    <div>
+      <div class="notice-title">{{#notice_title}}{{notice_title}}{{/notice_title}}{{^notice_title}}付款通知单{{/notice_title}}</div>
+      <p>{{#notice_subtitle}}{{notice_subtitle}}{{/notice_subtitle}}{{^notice_subtitle}}请在截止日期前完成付款{{/notice_subtitle}}</p>
+      <p>结算周期：{{#billing_period}}{{billing_period}}{{/billing_period}}{{^billing_period}}-{{/billing_period}}</p>
+    </div>
+    <div class="amounts">
+      <div>应付金额</div>
+      <div class="money" style="font-size: 40px; font-weight: 600;">
+        {{#total_amount}}{{total_amount}}{{/total_amount}}{{^total_amount}}0.00{{/total_amount}}
+      </div>
+      <small>{{#currency}}{{currency}}{{/currency}}{{^currency}}CNY{{/currency}}</small>
+    </div>
+  </header>
+  <section class="party-grid">
+    <div class="party-card">
+      <h3>付款方</h3>
+      <div>{{#payer_name}}{{payer_name}}{{/payer_name}}{{^payer_name}}-{{/payer_name}}</div>
+      <div>{{#payer_taxId}}{{payer_taxId}}{{/payer_taxId}}{{^payer_taxId}}-{{/payer_taxId}}</div>
+      <div>{{#payer_address}}{{payer_address}}{{/payer_address}}{{^payer_address}}-{{/payer_address}}</div>
+    </div>
+    <div class="party-card">
+      <h3>收款方</h3>
+      <div>{{#payee_name}}{{payee_name}}{{/payee_name}}{{^payee_name}}-{{/payee_name}}</div>
+      <div>{{#payee_bank}}{{payee_bank}}{{/payee_bank}}{{^payee_bank}}-{{/payee_bank}}</div>
+      <div>{{#payee_account}}{{payee_account}}{{/payee_account}}{{^payee_account}}-{{/payee_account}}</div>
+    </div>
+  </section>
+  <section class="line-items">
+    <div class="tr thead">
+      <div>项目</div>
+      <div>单价</div>
+      <div>单位</div>
+      <div>数量</div>
+      <div>金额</div>
+    </div>
+    {{#items}}
+      <div class="tr" style="display: {{display}};">
+        <div class="c-name">{{name}}</div>
+        <div class="money">{{unitPrice}}</div>
+        <div>{{unit}}</div>
+        <div>{{qty}}</div>
+        <div class="money">{{amount}}</div>
+      </div>
+    {{/items}}
+    {{^items}}
+      {{#fallbackLineItems}}
+        <div class="tr" style="display: {{display}};">
+          <div class="c-name">{{name}}</div>
+          <div class="money">{{unitPrice}}</div>
+          <div>{{unit}}</div>
+          <div>{{qty}}</div>
+          <div class="money">{{amount}}</div>
+        </div>
+      {{/fallbackLineItems}}
+      {{^fallbackLineItems}}
+        <div class="tr empty">暂无费用明细</div>
+      {{/fallbackLineItems}}
+    {{/items}}
+  </section>
+  <section class="totals">
+    <div><span>小计</span><span class="money">{{#subtotal}}{{subtotal}}{{/subtotal}}{{^subtotal}}0.00{{/subtotal}}</span></div>
+    <div><span>税额</span><span class="money">{{#tax}}{{tax}}{{/tax}}{{^tax}}0.00{{/tax}}</span></div>
+    <div style="font-weight: 600; font-size: 18px;"><span>应付</span><span class="money">{{#total_amount}}{{total_amount}}{{/total_amount}}{{^total_amount}}0.00{{/total_amount}}</span></div>
+  </section>
+  <footer class="watermark-badge">
+    渲染编号 {{__meta.requestId}} ｜ Token {{__meta.token}} ｜ 请求时间 {{__meta.requestTime}}
+  </footer>
+</section>
