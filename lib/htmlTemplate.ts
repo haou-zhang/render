@@ -98,7 +98,7 @@ export async function renderHtml({ templateName, payload, meta }: HtmlTemplateOp
     body {
       margin: 0;
       padding: 0;
-      font-family: 'AlibabaPuHuiTi', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      font-family: 'Noto Sans SC', 'AlibabaPuHuiTi', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
       background: #f3f4f6;
       color: #0f172a;
     }

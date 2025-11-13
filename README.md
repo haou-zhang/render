@@ -5,7 +5,7 @@
 ## 核心特性
 - **Next.js 16 App Router**：原生 SSR/ISR，Node Runtime 下可无缝运行 Puppeteer、pdf-lib 等 Node 生态。
 - **模板安全沙箱**：模板位于 `template/`，通过 Mustache 渲染与 `sanitize-html` 清洗，仅保留白名单标签与属性。
-- **自带企业级字体**：`Fonts/` 内置 Alibaba PuHuiTi 家族，`lib/fontLoader.ts` 自动嵌入 WOFF2 数据，服务器/边缘环境渲染一致。
+- **自带企业级字体**：默认通过公共 CDN 拉取 Noto Sans SC（无 Google 依赖，可配置 `FONT_CDN_BASE`），`lib/fontLoader.ts` 自动嵌入 WOFF2 数据，保证服务器/边缘环境渲染一致。
 - **图片化 PDF 防篡改**：Chromium 将 HTML 渲染为 PNG，再由 pdf-lib 写入 PDF；页面内容无法直接被复制修改。
 - **请求元数据隐水印**：每一页 PDF 都写入 Token、requestId、IP、User-Agent、时间戳的旋转半透明文字，便于溯源。
 - **临时调试入口**：`/haoutest` 页面便于在测试阶段组合模板/Token。
@@ -15,7 +15,6 @@
 app/                     Next.js App Router（主页、haoutest、动态渲染路由）
 lib/                     核心逻辑（Chromium 启动、HTML 渲染、PDF 生成、安全校验等）
 template/                Mustache HTML 模板（例如 pay_notice.html）
-Fonts/                   字体文件
 next.config.js           Next.js 配置
 tsconfig.json            TypeScript 配置（Next.js 自动附加插件与 include）
 eslint.config.mjs        ESLint Flat Config（基于 eslint-config-next）
@@ -42,6 +41,7 @@ npm run start      # 启动生产环境
 | `CHROME_EXECUTABLE_PATH` / `PUPPETEER_EXECUTABLE_PATH` | 自动探测 | 本地或自定义 Chrome 的绝对路径。 |
 | `CHROMIUM_FORCE_AWS` / `CHROMIUM_FORCE_LOCAL` | 未设置 | 强制使用 @sparticuz/chromium 或本地浏览器。 |
 | `ALLOW_HAOUTEST_DATA` | `true` | 是否允许 `/haoutest` 通过直接数据 JSON 生成 PDF；生产建议设为 `false`。 |
+| `FONT_CDN_BASE` | `https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc/files` | 字体 CDN 根路径，默认使用 fontsource 托管的 Noto Sans SC（非 Google 源）；可自定义为任何可公开访问的中文字体地址。 |
 
 ## 渲染流程
 1. **请求入口**：路由 `/<template>/<token>` 解码路径，使用严格正则验证模板名与 Token。
@@ -52,7 +52,7 @@ npm run start      # 启动生产环境
 
 ## 模板与字体
 - 模板语法为 Mustache，占位符形如 `{{field}}`。`pay_notice.html` 同时支持 `items` 数组与旧版 `itemN_*` 字段（在路由中自动转换为 `fallbackLineItems`）。
-- 字体由 `lib/fontLoader.ts` 读取 WOFF2 文件并注入 base64 数据 URI，确保无论部署环境如何都能使用阿里巴巴普惠体。
+- 字体由 `lib/fontLoader.ts` 通过公共 CDN 拉取 Noto Sans SC 的 WOFF2 文件并注入 base64 数据 URI（默认基于 `FONT_CDN_BASE`，可指向任意合规的中文字体），因此无需把大体积字体放入仓库，也不依赖 Google Fonts。
 
 ## 隐藏请求元数据戳记
 ### 原理
