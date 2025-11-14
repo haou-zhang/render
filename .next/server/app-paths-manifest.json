@@ -1,0 +1,8 @@
+{
+  "/[templateName]/[token]/route": "app/[templateName]/[token]/route.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/haoutest/render/route": "app/api/haoutest/render/route.js",
+  "/haoutest/page": "app/haoutest/page.js",
+  "/page": "app/page.js"
+}

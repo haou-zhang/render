@@ -1,8 +1,8 @@
 # Node / Next.js
 node_modules/
-.next/
+
 out/
-.next-static/
+
 
 # Logs & diagnostics
 npm-debug.log*

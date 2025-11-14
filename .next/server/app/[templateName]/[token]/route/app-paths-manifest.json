@@ -1,0 +1,3 @@
+{
+  "/[templateName]/[token]/route": "app/[templateName]/[token]/route.js"
+}

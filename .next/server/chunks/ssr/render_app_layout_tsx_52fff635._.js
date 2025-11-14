@@ -1,0 +1,3 @@
+module.exports=[43751,a=>{"use strict";var b=a.i(36233);let c={title:"render.messesum.com | Secure PDF rendering",description:"High-performance PDF rendering edge ready worker for Messesum builder.",metadataBase:new URL("https://render.messesum.com"),openGraph:{title:"render.messesum.com",description:"Secure token-aware PDF rendering pipeline",url:"https://render.messesum.com",siteName:"render.messesum.com"}};function d({children:a}){return(0,b.jsx)("html",{lang:"zh-CN",children:(0,b.jsx)("body",{children:a})})}a.s(["default",()=>d,"metadata",0,c])}];
+
+//# sourceMappingURL=render_app_layout_tsx_52fff635._.js.map

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "functions": {
+    "/[templateName]/[token]": {
+      "maxDuration": 60
+    },
+    "/api/haoutest/render": {
+      "maxDuration": 60
+    }
+  }
+}
